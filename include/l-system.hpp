@@ -5,6 +5,7 @@
 #include <sstream>
 #include "../include/rule.hpp"
 #include "../include/turtle.hpp"
+#include "../include/data-manager.hpp"
 
 typedef struct Vector3
 {
@@ -15,35 +16,24 @@ typedef struct Vector3
 
 class Lsystem {
 private:
-    std::vector<Rule> rules;
-    std::string current; // the axiom
-    std::stringstream next; // holds each generation
+    std::string current; // the current l-system string
+    std::stringstream next; // used to build the next l-system generation
 
-    // Drawing relevant
     Turtle turtle;
-
-    // editable values
-    int iteration;
-    float r, g, b, a;
-    float theta;
     std::vector<Vector3> turtle_branch_data;
+    Lsystem_Data* ls_data;
+    int iteration;
 
     // SDL specific
     SDL_Renderer* p_renderer;
 
 public:
-    Lsystem(std::string current, // the axiom
-            int start_x,
+    Lsystem(int start_x,
             int start_y,
-            float r,
-            float g,
-            float b,
-            float a,
-            double theta,
             float length,
+            Lsystem_Data* ls_data,
             SDL_Renderer* p_renderer);
 
-    std::vector<Rule> Populate_Rules();
     void Iterate_Generation();
     void Draw_Generation();
     int Get_Iteration();

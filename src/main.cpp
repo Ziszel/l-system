@@ -19,21 +19,17 @@ int main(int argc, char *args[])
     }
 
     Data_Manager dm;
-    Lsystem_Data l_data = dm.Load("rulesets/plant_a");
+    Lsystem_Data l_data = dm.Load("rulesets/plant_c");
 
-    int iterations = 3;
+    int iterations = 5;
+    float length = 3.0f;
 
     // Initialise objects
     Lsystem lsystem(
-        l_data.axiom, // axiom
         SCREEN_WIDTH / 2, // start x
         SCREEN_HEIGHT, // start y
-        l_data.red, // r
-        l_data.green, // g
-        l_data.blue,  // b
-        l_data.alpha, // a
-        l_data.theta, // theta
-        l_data.line_length, // length
+        length,
+        &l_data,
         p_renderer
     );
 

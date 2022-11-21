@@ -1,10 +1,10 @@
 # Define vars
 IDIR=include/
 CC=g++
-PROG=fractals
+PROG=l-system-viewer
 CFLAGS=-g -W -Wall -Wextra -pedantic -std=c++17 -lpthread -Llib -lSDL2 -lSDL2main
 
-data-manager.o:
+data-manager.o: rule.o
 	$(CC) $(CFLAGS) -c src/data-manager.cpp
 
 turtle.o:
@@ -13,7 +13,7 @@ turtle.o:
 rule.o:
 	$(CC) $(CFLAGS) -c src/rule.cpp
 
-l-system.o: turtle.o rule.o
+l-system.o: turtle.o rule.o data-manager.o
 	$(CC) $(CFLAGS) -c src/l-system.cpp
 
 sdl-app.o:

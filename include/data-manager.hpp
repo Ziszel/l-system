@@ -1,7 +1,10 @@
+#pragma once
 #include <string>
 #include <string.h>
 #include <fstream>
 #include <iostream>
+#include <vector>
+#include "../include/rule.hpp"
 
 typedef struct Lsystem_Data
 {
@@ -14,6 +17,7 @@ typedef struct Lsystem_Data
     int alpha;
     float theta;
     float line_length;
+    std::vector<Rule> ruleset;
 } Lsystem_Data;
 
 class Data_Manager {

@@ -11,12 +11,12 @@ Lsystem_Data Data_Manager::Load(std::string file_path)
     // ':' is used to delimit between the prop name, and prop value
     std::string delimiter = ":";
     // load a file by way of the file path parameter
-    std::ifstream file(file_path, std::ifstream::in);
+    std::ifstream file_data(file_path, std::ifstream::in);
 
     // ensure the file has been loaded successfully else throw and error
-    if (file)
+    if (file_data)
     {
-        for (std::string line; std::getline(file, line);)
+        for (std::string line; std::getline(file_data, line);)
         {
             int delim_location = line.find(delimiter);
 
@@ -31,7 +31,32 @@ Lsystem_Data Data_Manager::Load(std::string file_path)
                 std::cout << "illegal data inside of data file. Error: " << strerror(errno);
             }
         }
-        file.close();
+        file_data.close();
+    }
+    // handle the error and return useful information back to the user
+    else {
+        std::cout << "error reading ruleset file." << "\n";
+        std::cout << "Error: " << strerror(errno);
+    }
+
+    std::string rules_path = file_path + ".rules";
+
+    std::ifstream rules_data(rules_path, std::ifstream::in);
+
+    // rules are stored in a separate file due to the structure of a rule object
+    // and due to rulesets being dynamic in quantity.
+    // bringing them in separately and merging them into the same struct keeps the code clean elsewhere
+    if (rules_data)
+    {
+        for(std::string line; std::getline(rules_data, line);)
+        {
+            int delim_location = line.find(delimiter);
+
+            char prop = line[0];
+            std::string value = line.substr(delim_location + 1, line.length());
+            Rule rule = {prop, value};
+            ls_data.ruleset.push_back(rule);
+        }
     }
     // handle the error and return useful information back to the user
     else {
