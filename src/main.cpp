@@ -17,7 +17,7 @@ int main(int argc, char *args[])
         return -1;
     }
 
-    int iterations = 2;
+    int iterations = 1;
 
     // Initialise objects
     Lsystem lsystem(
@@ -33,7 +33,7 @@ int main(int argc, char *args[])
         p_renderer
     );
 
-    for (int i = 0; i < iterations; ++i)
+    for (int i = 0; i <= iterations; ++i)
     {
         lsystem.Iterate_Generation();
     }
@@ -42,7 +42,10 @@ int main(int argc, char *args[])
     SDL_SetRenderDrawColor(p_renderer, 0, 0, 0, 255);
     SDL_RenderClear(p_renderer);
 
-    lsystem.Draw_Generation();
+    if (iterations > 0)
+    {
+        lsystem.Draw_Generation();
+    }
 
     SDL_RenderPresent(p_renderer);
 

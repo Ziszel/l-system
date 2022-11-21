@@ -34,13 +34,14 @@ std::vector<Rule> Lsystem::Populate_Rules()
 
 void Lsystem::Iterate_Generation()
 {
-        std::cout << current << "\n";
+    
+        std::cout << "iterations: " << this->iteration << " " << this->current << "\n";
         // completely erase stringstream
         this->next.clear(); this->next.str(std::string());
         // Iterate generation
-        for(auto i: current)
+        for(auto i: this->current)
         {
-            for(auto r : rules)
+            for(auto r : this->rules)
             {
                 if(i == r.Get_Input())
                 {
@@ -48,8 +49,8 @@ void Lsystem::Iterate_Generation()
                 }
             }
         }
-        current = next.str();
-        iteration++;
+        this->current = this->next.str();
+        this->iteration++;
         //this->turtle.Set_Length(this->turtle.Get_Length() / 4);
 }
 
