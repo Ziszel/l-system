@@ -25,7 +25,7 @@ std::vector<Rule> Lsystem::Populate_Rules()
 {
     std::vector<Rule> return_value;
 
-    Rule rule_1 = {'F', "F[+F]F[-F]F"};
+    Rule rule_1 = {'F', "F+F-F-FF+F+F-F"};
 
     return_value.push_back(rule_1);
 
@@ -70,11 +70,11 @@ void Lsystem::Draw_Generation()
                 break;
             }
             case '-': {
-                this->turtle.Rotate_Right(theta);
+                this->turtle.Rotate_Left(theta);
                 break;
             }
             case '+': {
-                this->turtle.Rotate_Left(theta);
+                this->turtle.Rotate_Right(theta);
                 break;
             }
             case '[': {

@@ -17,18 +17,18 @@ int main(int argc, char *args[])
         return -1;
     }
 
-    int iterations = 3;
+    int iterations = 2;
 
     // Initialise objects
     Lsystem lsystem(
-        "F", // axiom
+        "F+F+F+F", // axiom
         SCREEN_WIDTH / 2, // start x
-        SCREEN_HEIGHT, // start y
+        SCREEN_HEIGHT / 2, // start y
         255, // r
         0, // g
         0,  // b
         255, // a
-        25.0f, // theta
+        90.0f, // theta
         10.0f, // length
         p_renderer
     );
