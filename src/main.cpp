@@ -1,6 +1,7 @@
 #include "../include/sdl-app.hpp"
 #include "../include/turtle.hpp"
 #include "../include/l-system.hpp"
+#include "../include/data-manager.hpp"
 
 using namespace sdl_helper;
 
@@ -17,19 +18,22 @@ int main(int argc, char *args[])
         return -1;
     }
 
+    Data_Manager dm;
+    Lsystem_Data l_data = dm.Load("rulesets/plant_a");
+
     int iterations = 3;
 
     // Initialise objects
     Lsystem lsystem(
-        "F", // axiom
+        l_data.axiom, // axiom
         SCREEN_WIDTH / 2, // start x
         SCREEN_HEIGHT, // start y
-        255, // r
-        0, // g
-        0,  // b
-        255, // a
-        25.7f, // theta
-        10.0f, // length
+        l_data.red, // r
+        l_data.green, // g
+        l_data.blue,  // b
+        l_data.alpha, // a
+        l_data.theta, // theta
+        l_data.line_length, // length
         p_renderer
     );
 

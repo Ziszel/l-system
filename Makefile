@@ -4,6 +4,9 @@ CC=g++
 PROG=fractals
 CFLAGS=-g -W -Wall -Wextra -pedantic -std=c++17 -lpthread -Llib -lSDL2 -lSDL2main
 
+data-manager.o:
+	$(CC) $(CFLAGS) -c src/data-manager.cpp
+
 turtle.o:
 	$(CC) $(CFLAGS) -c src/turtle.cpp
 
@@ -16,12 +19,12 @@ l-system.o: turtle.o rule.o
 sdl-app.o:
 	$(CC) $(CFLAGS) -c src/sdl-app.cpp
 
-main.o: sdl-app.o turtle.o l-system.o
+main.o: sdl-app.o turtle.o l-system.o data-manager.o
 	$(CC) $(CFLAGS) -c src/main.cpp
 
 .PHONY: all
 all: main.o
-	$(CC) -o $(PROG) main.o sdl-app.o turtle.o l-system.o rule.o $(CFLAGS) -I$(IDIR)
+	$(CC) -o $(PROG) main.o sdl-app.o turtle.o l-system.o rule.o data-manager.o $(CFLAGS) -I$(IDIR)
 
 .PHONY: clean
 clean:

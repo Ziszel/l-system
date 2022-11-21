@@ -35,7 +35,7 @@ std::vector<Rule> Lsystem::Populate_Rules()
 void Lsystem::Iterate_Generation()
 {
     
-        std::cout << "iterations: " << this->iteration << " " << this->current << "\n";
+        //std::cout << "iterations: " << this->iteration << " " << this->current << "\n";
         // completely erase stringstream
         this->next.clear(); this->next.str(std::string());
         // Iterate generation
