@@ -44,36 +44,6 @@ void Turtle::Rotate_Right(float angle)
     this->angle += Deg_To_Rad(angle);
 }
 
-// Required for certain types of fractals.
-// Currently unused
-void Turtle::Look_At(float x, float y)
-{
-    float delta_x = x - this->x;
-    float delta_y = y - this->y;
-
-    // If x or y are == 0, can't divide by 0
-    if (delta_x == 0.0f)
-    {
-        if (delta_y > 0.0f) // angle must be 90
-        {
-            this->angle = M_PI / 2.0; // pi / 2 = 90 degrees (in rad)
-        }
-        // angle must be 270
-        else { this->angle = M_PI + (M_PI / 2.0f); } // 180 + 90 = 270 degrees (in rad)
-    }
-    else 
-    {
-        // the arc tangent of the change in y / by the change in x
-        // gives the angle between where the turtle is, and where it is to look
-        this->angle = atan(delta_y / delta_x);
-    }
-    // If x is less than 0, we flip the angle (by 180) to find the correct angle
-    if (delta_x < 0.0f)
-    {
-        this->angle += M_PI;
-    }
-}
-
 void Turtle::Step()
 {
     float start_x = this->x;

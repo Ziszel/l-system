@@ -25,7 +25,7 @@ std::vector<Rule> Lsystem::Populate_Rules()
 {
     std::vector<Rule> return_value;
 
-    Rule rule_1 = {'F', "F+F-F-FF+F+F-F"};
+    Rule rule_1 = {'F', "F[+F]F[-F]F"};
 
     return_value.push_back(rule_1);
 
@@ -41,17 +41,22 @@ void Lsystem::Iterate_Generation()
         // Iterate generation
         for(auto i: this->current)
         {
+            int wasRule = 0;
             for(auto r : this->rules)
             {
                 if(i == r.Get_Input())
                 {
                     this->next << r.Get_Output();
+                    wasRule++;
                 }
+            }
+            if (wasRule == 0)
+            {
+                this->next << i;
             }
         }
         this->current = this->next.str();
         this->iteration++;
-        //this->turtle.Set_Length(this->turtle.Get_Length() / 4);
 }
 
 void Lsystem::Draw_Generation()
