@@ -3,7 +3,7 @@
 SDL_Window *sdl_helper::p_window = NULL;
 SDL_Renderer *sdl_helper::p_renderer = NULL;
 float sdl_helper::program_running = false;
-int sdl_helper::active_lsystem = 0;
+int sdl_helper::active_lsystem = -1;
 
 int sdl_helper::Init_SDL()
 {
@@ -45,11 +45,13 @@ void sdl_helper::Handle_Event(SDL_Event *event, std::vector<Lsystem*> lsystems)
         switch (event->key.keysym.sym)
         {
         case 'a':
-            if (active_lsystem == 2)
+            if (active_lsystem == lsystems.size() - 1) // this should match the count of the config files loaded - 1
             {
                 active_lsystem = 0;
             }
             else { active_lsystem++; }
+
+            std::cout << active_lsystem << "\n";
 
             SDL_SetRenderDrawColor(p_renderer, 0, 0, 0, 255); // make the bg black
             SDL_RenderClear(p_renderer); // clear the renderer ready for fresh drawing

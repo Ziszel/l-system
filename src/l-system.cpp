@@ -1,5 +1,7 @@
 #include "../include/l-system.hpp"
 
+// Two types of rewriting systems (edge and node), both are similarly implemented:
+//https://stackoverflow.com/questions/27858249/l-system-node-rewriting-example
 // turtle must be initialised before constructor call of Lsystem, constructor list used for this purpose
 Lsystem::Lsystem(int start_x, int start_y, float length, Lsystem_Data *ls_data,
                  SDL_Renderer *p_renderer) : turtle()

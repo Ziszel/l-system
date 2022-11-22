@@ -26,6 +26,9 @@ int main(int argc, char *args[])
     Lsystem_Data l_data_pa = dm.Load("rulesets/plant_a");
     Lsystem_Data l_data_pb = dm.Load("rulesets/plant_b");
     Lsystem_Data l_data_pc = dm.Load("rulesets/plant_c");
+    Lsystem_Data l_data_pd = dm.Load("rulesets/plant_d");
+    Lsystem_Data l_data_pe = dm.Load("rulesets/plant_e");
+    Lsystem_Data l_data_pf = dm.Load("rulesets/plant_f");
 
     // Initialise objects
     // Created as pointer due to issue with implicit deletion when passed into
@@ -48,12 +51,33 @@ int main(int argc, char *args[])
         length,
         &l_data_pc,
         p_renderer);
+    Lsystem* lsystem_pd = new Lsystem(
+        SCREEN_WIDTH / 2, // start x
+        SCREEN_HEIGHT,    // start y
+        length,
+        &l_data_pd,
+        p_renderer);
+    Lsystem* lsystem_pe = new Lsystem(
+        SCREEN_WIDTH / 2, // start x
+        SCREEN_HEIGHT,    // start y
+        length,
+        &l_data_pe,
+        p_renderer);
+    Lsystem* lsystem_pf = new Lsystem(
+        SCREEN_WIDTH / 2, // start x
+        SCREEN_HEIGHT,    // start y
+        length,
+        &l_data_pf,
+        p_renderer);
 
     for (int i = 0; i <= iterations; ++i)
     {
         lsystem_pa->Iterate_Generation();
         lsystem_pb->Iterate_Generation();
         lsystem_pc->Iterate_Generation();
+        lsystem_pd->Iterate_Generation();
+        lsystem_pe->Iterate_Generation();
+        lsystem_pf->Iterate_Generation();
     }
 
     // when passed into the Handle_Event() function as a non-pointer, encountered the following issue:
@@ -65,6 +89,9 @@ int main(int argc, char *args[])
     lsystems.push_back(lsystem_pa);
     lsystems.push_back(lsystem_pb);
     lsystems.push_back(lsystem_pc);
+    lsystems.push_back(lsystem_pd);
+    lsystems.push_back(lsystem_pe);
+    lsystems.push_back(lsystem_pf);
 
     // Prepare event handling and enter main program loop
     SDL_Event event;

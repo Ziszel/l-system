@@ -6,8 +6,8 @@
 
 namespace sdl_helper {
 
-    const int SCREEN_WIDTH = 1920;
-    const int SCREEN_HEIGHT = 900;
+    const int SCREEN_WIDTH = 1280;
+    const int SCREEN_HEIGHT = 720;
 
     // https://stackoverflow.com/questions/12511044/bss0x0-multiple-definition-of-proxies
     // https://www.freecodecamp.org/news/extern-keyword-function-tutorial/
