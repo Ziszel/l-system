@@ -12,13 +12,31 @@ Lsystem::Lsystem(int start_x, int start_y, float length, Lsystem_Data *ls_data,
     this->turtle.Pen_Down();
     this->turtle.Set_Renderer(p_renderer);
     this->turtle.Set_Length(length);
-    turtle.Set_Pos(start_x, start_y); // turtle start pos
+    this->turtle.Set_Pen_Colour(ls_data->red, ls_data->blue, ls_data->green, ls_data->alpha);
+
+    this->turtle_start_x = start_x;
+    this->turtle_start_y = start_y;
+    this->turtle.Set_Pos(turtle_start_x, turtle_start_y); // turtle start pos
 }
+
+// void Lsystem::Reset()
+// {
+//     this->ls_data = ls_data;
+//     this->current = this->ls_data->axiom;
+//     this->iteration = 0;
+
+//     // Initial turtle setup
+//     this->turtle.Pen_Down();
+//     this->turtle.Set_Renderer(p_renderer);
+//     this->turtle.Set_Length(length);
+//     this->turtle.Set_Pen_Colour(ls_data->red, ls_data->blue, ls_data->green, ls_data->alpha);
+//     turtle.Set_Pos(start_x, start_y); // turtle start pos
+// }
 
 void Lsystem::Iterate_Generation()
 {
     // completely erase stringstream
-    this->next.clear();
+    this->next.clear(); 
     this->next.str(std::string());
     // Iterate generation
     for (auto i : this->current)
@@ -93,6 +111,8 @@ void Lsystem::Draw_Generation()
             }
         }
     }
+    // Reset the turtle position for the next time the l-system needs to be drawn
+    this->turtle.Set_Pos(turtle_start_x, turtle_start_y);
 }
 
 int Lsystem::Get_Iteration()

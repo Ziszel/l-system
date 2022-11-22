@@ -23,6 +23,8 @@ private:
     std::vector<Vector3> turtle_branch_data;
     Lsystem_Data* ls_data;
     int iteration;
+    int turtle_start_x;
+    int turtle_start_y;
 
     // SDL specific
     SDL_Renderer* p_renderer;

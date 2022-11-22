@@ -1,8 +1,9 @@
 #include "../include/sdl-app.hpp"
 
-SDL_Window* sdl_helper::p_window = NULL;
-SDL_Renderer* sdl_helper::p_renderer = NULL;
+SDL_Window *sdl_helper::p_window = NULL;
+SDL_Renderer *sdl_helper::p_renderer = NULL;
 float sdl_helper::program_running = false;
+int sdl_helper::active_lsystem = 0;
 
 int sdl_helper::Init_SDL()
 {
@@ -32,9 +33,33 @@ int sdl_helper::Init_SDL()
     return 0;
 }
 
-void sdl_helper::Handle_Event(SDL_Event *event)
+void sdl_helper::Handle_Event(SDL_Event *event, std::vector<Lsystem*> lsystems)
 {
     if (event->type == SDL_QUIT)
         program_running = false;
+    // Detect if a key has been pressed
+    // https://wiki.libsdl.org/SDL_KeyboardEvent
+    if (event->type == SDL_KEYDOWN)
+    {
+        // get the SDL virtual key code to detect which key is pressed
+        switch (event->key.keysym.sym)
+        {
+        case 'a':
+            if (active_lsystem == 2)
+            {
+                active_lsystem = 0;
+            }
+            else { active_lsystem++; }
 
+            SDL_SetRenderDrawColor(p_renderer, 0, 0, 0, 255); // make the bg black
+            SDL_RenderClear(p_renderer); // clear the renderer ready for fresh drawing
+            lsystems.at(active_lsystem)->Draw_Generation(); // draw the active l-system
+
+            SDL_RenderPresent(p_renderer); // present the render to the screen
+            break;
+
+        default:
+            break;
+        }
+    }
 }

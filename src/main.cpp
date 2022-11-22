@@ -2,6 +2,7 @@
 #include "../include/turtle.hpp"
 #include "../include/l-system.hpp"
 #include "../include/data-manager.hpp"
+#include <vector>
 
 using namespace sdl_helper;
 
@@ -18,51 +19,69 @@ int main(int argc, char *args[])
         return -1;
     }
 
-    Data_Manager dm;
-    Lsystem_Data l_data = dm.Load("rulesets/plant_c");
+    int iterations = 4;
+    float length = 4.0f;
 
-    int iterations = 5;
-    float length = 3.0f;
+    Data_Manager dm;
+    Lsystem_Data l_data_pa = dm.Load("rulesets/plant_a");
+    Lsystem_Data l_data_pb = dm.Load("rulesets/plant_b");
+    Lsystem_Data l_data_pc = dm.Load("rulesets/plant_c");
 
     // Initialise objects
-    Lsystem lsystem(
+    // Created as pointer due to issue with implicit deletion when passed into
+    // a vector
+    Lsystem* lsystem_pa = new Lsystem(
         SCREEN_WIDTH / 2, // start x
-        SCREEN_HEIGHT, // start y
+        SCREEN_HEIGHT,    // start y
         length,
-        &l_data,
-        p_renderer
-    );
+        &l_data_pa,
+        p_renderer);
+    Lsystem* lsystem_pb = new Lsystem(
+        SCREEN_WIDTH / 2, // start x
+        SCREEN_HEIGHT,    // start y
+        length,
+        &l_data_pb,
+        p_renderer);
+    Lsystem* lsystem_pc = new Lsystem(
+        SCREEN_WIDTH / 2, // start x
+        SCREEN_HEIGHT,    // start y
+        length,
+        &l_data_pc,
+        p_renderer);
 
     for (int i = 0; i <= iterations; ++i)
     {
-        lsystem.Iterate_Generation();
+        lsystem_pa->Iterate_Generation();
+        lsystem_pb->Iterate_Generation();
+        lsystem_pc->Iterate_Generation();
     }
 
-    // handle one-time drawing outside of Draw loop
-    SDL_SetRenderDrawColor(p_renderer, 0, 0, 0, 255);
-    SDL_RenderClear(p_renderer);
+    // when passed into the Handle_Event() function as a non-pointer, encountered the following issue:
+    // error: use of deleted function ‘Lsystem::Lsystem(const Lsystem&)’
+    // Lsystem::Lsystem(const Lsystem&)’ is implicitly deleted because the default definition would be ill-formed:
+    // Unable to fix, so passed in as pointers instead
+    std::vector<Lsystem*> lsystems;
 
-    if (iterations > 0)
-    {
-        lsystem.Draw_Generation();
-    }
-
-    SDL_RenderPresent(p_renderer);
+    lsystems.push_back(lsystem_pa);
+    lsystems.push_back(lsystem_pb);
+    lsystems.push_back(lsystem_pc);
 
     // Prepare event handling and enter main program loop
     SDL_Event event;
 
     while (program_running)
     {
+        // Update
         // While there are events queued, process them
         while (SDL_PollEvent(&event) != 0)
         {
-            Handle_Event(&event);
+            Handle_Event(&event, lsystems);
         }
 
-        // Update
-
         // Draw
+        // If there were moving imagery, I would draw it here.
+        // However, I am handling the images simliar to a UI due to their static
+        // nature. Therefore, they are handled through the 'Handle_Event() function
     }
 
     // CLEANUP
@@ -73,6 +92,11 @@ int main(int argc, char *args[])
     p_window = NULL; // Stop pointer referencing freed memory
     // Ensure SDL is quit before ending program
     SDL_Quit();
+
+    // ensure data assigned to the heap is cleaned before exiting the program
+    delete(lsystem_pa);
+    delete(lsystem_pb);
+    delete(lsystem_pc);
 
     return 0;
 }
