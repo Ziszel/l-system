@@ -45,13 +45,14 @@ void sdl_helper::Handle_Event(SDL_Event *event, std::vector<Lsystem*> lsystems)
         switch (event->key.keysym.sym)
         {
         case 'a':
+            // active_lsystem counts from 0 to the size of the lsystem vector passed in
+            // this allows me to access a specific lsystem, and each time a key is pressed
+            // cycle through them, drawing only the 'active' lsystem
             if (active_lsystem == lsystems.size() - 1) // this should match the count of the config files loaded - 1
             {
                 active_lsystem = 0;
             }
             else { active_lsystem++; }
-
-            std::cout << active_lsystem << "\n";
 
             SDL_SetRenderDrawColor(p_renderer, 0, 0, 0, 255); // make the bg black
             SDL_RenderClear(p_renderer); // clear the renderer ready for fresh drawing

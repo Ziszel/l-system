@@ -115,6 +115,7 @@ void Lsystem::Draw_Generation()
     }
     // Reset the turtle position for the next time the l-system needs to be drawn
     this->turtle.Set_Pos(turtle_start_x, turtle_start_y);
+    this->turtle.Set_Angle(this->turtle.Deg_To_Rad(-90));
 }
 
 int Lsystem::Get_Iteration()
