@@ -25,6 +25,8 @@ private:
     int iteration;
     int turtle_start_x;
     int turtle_start_y;
+    std::vector<Vector3> turtle_colours;
+    int current_colour = 0;
 
     // SDL specific
     SDL_Renderer* p_renderer;
@@ -32,11 +34,12 @@ private:
 public:
     Lsystem(int start_x,
             int start_y,
-            float length,
             Lsystem_Data* ls_data,
             SDL_Renderer* p_renderer);
 
     void Iterate_Generation();
     void Draw_Generation();
     int Get_Iteration();
+    void Change_Turtle_Colour();
+    void Populate_Turtle_Colours();
 };

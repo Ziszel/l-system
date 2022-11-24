@@ -3,37 +3,24 @@
 // Two types of rewriting systems (edge and node), both are similarly implemented:
 //https://stackoverflow.com/questions/27858249/l-system-node-rewriting-example
 // turtle must be initialised before constructor call of Lsystem, constructor list used for this purpose
-Lsystem::Lsystem(int start_x, int start_y, float length, Lsystem_Data *ls_data,
+Lsystem::Lsystem(int start_x, int start_y, Lsystem_Data *ls_data,
                  SDL_Renderer *p_renderer) : turtle()
 {
     this->ls_data = ls_data;
     this->current = this->ls_data->axiom;
     this->iteration = 0;
+    this->Populate_Turtle_Colours();
 
     // Initial turtle setup
     this->turtle.Pen_Down();
     this->turtle.Set_Renderer(p_renderer);
-    this->turtle.Set_Length(length);
+    this->turtle.Set_Length(this->ls_data->line_length);
     this->turtle.Set_Pen_Colour(ls_data->red, ls_data->blue, ls_data->green, ls_data->alpha);
 
     this->turtle_start_x = start_x;
     this->turtle_start_y = start_y;
     this->turtle.Set_Pos(turtle_start_x, turtle_start_y); // turtle start pos
 }
-
-// void Lsystem::Reset()
-// {
-//     this->ls_data = ls_data;
-//     this->current = this->ls_data->axiom;
-//     this->iteration = 0;
-
-//     // Initial turtle setup
-//     this->turtle.Pen_Down();
-//     this->turtle.Set_Renderer(p_renderer);
-//     this->turtle.Set_Length(length);
-//     this->turtle.Set_Pen_Colour(ls_data->red, ls_data->blue, ls_data->green, ls_data->alpha);
-//     turtle.Set_Pos(start_x, start_y); // turtle start pos
-// }
 
 void Lsystem::Iterate_Generation()
 {
@@ -116,6 +103,53 @@ void Lsystem::Draw_Generation()
     // Reset the turtle position for the next time the l-system needs to be drawn
     this->turtle.Set_Pos(turtle_start_x, turtle_start_y);
     this->turtle.Set_Angle(this->turtle.Deg_To_Rad(-90));
+}
+
+void Lsystem::Populate_Turtle_Colours()
+{
+    // red
+    Vector3 colour = {255, 0, 0};
+    this->turtle_colours.push_back(colour);
+
+    // green
+    colour = {0, 255, 0};
+    this->turtle_colours.push_back(colour);
+
+    // blue
+    colour = {0, 0, 255};
+    this->turtle_colours.push_back(colour);
+
+    // yellow
+    colour = {255, 255, 0};
+    this->turtle_colours.push_back(colour);
+
+    // purple
+    colour = {128, 0, 128};
+    this->turtle_colours.push_back(colour);
+
+    // cyan
+    colour = {0, 255, 255};
+    this->turtle_colours.push_back(colour);
+
+    // white
+    colour = {255, 255, 255};
+    this->turtle_colours.push_back(colour);
+}
+
+void Lsystem::Change_Turtle_Colour()
+{
+    if (this->current_colour == this->turtle_colours.size())
+    {
+        this->current_colour = 0;
+    }
+
+    int r = this->turtle_colours.at(current_colour).x;
+    int g = this->turtle_colours.at(current_colour).y;
+    int b = this->turtle_colours.at(current_colour).z;
+
+    this->turtle.Set_Pen_Colour(r, g, b, 255);
+
+    this->current_colour++;
 }
 
 int Lsystem::Get_Iteration()

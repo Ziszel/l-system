@@ -19,8 +19,7 @@ int main(int argc, char *args[])
         return -1;
     }
 
-    int iterations = 4;
-    float length = 4.0f;
+    int iterations = 5;
 
     Data_Manager dm;
     Lsystem_Data l_data_pa = dm.Load("rulesets/plant_a");
@@ -29,6 +28,8 @@ int main(int argc, char *args[])
     Lsystem_Data l_data_pd = dm.Load("rulesets/plant_d");
     Lsystem_Data l_data_pe = dm.Load("rulesets/plant_e");
     Lsystem_Data l_data_pf = dm.Load("rulesets/plant_f");
+    Lsystem_Data l_data_qs = dm.Load("rulesets/quadratic_snowflake");
+    Lsystem_Data l_data_kce = dm.Load("rulesets/koch_curve_e");
 
     // Initialise objects
     // Created as pointer due to issue with implicit deletion when passed into
@@ -36,38 +37,42 @@ int main(int argc, char *args[])
     Lsystem* lsystem_pa = new Lsystem(
         SCREEN_WIDTH / 2, // start x
         SCREEN_HEIGHT,    // start y
-        length,
         &l_data_pa,
         p_renderer);
     Lsystem* lsystem_pb = new Lsystem(
         SCREEN_WIDTH / 2, // start x
         SCREEN_HEIGHT,    // start y
-        length,
         &l_data_pb,
         p_renderer);
     Lsystem* lsystem_pc = new Lsystem(
         SCREEN_WIDTH / 2, // start x
         SCREEN_HEIGHT,    // start y
-        length,
         &l_data_pc,
         p_renderer);
     Lsystem* lsystem_pd = new Lsystem(
         SCREEN_WIDTH / 2, // start x
         SCREEN_HEIGHT,    // start y
-        length,
         &l_data_pd,
         p_renderer);
     Lsystem* lsystem_pe = new Lsystem(
         SCREEN_WIDTH / 2, // start x
         SCREEN_HEIGHT,    // start y
-        length,
         &l_data_pe,
         p_renderer);
     Lsystem* lsystem_pf = new Lsystem(
         SCREEN_WIDTH / 2, // start x
         SCREEN_HEIGHT,    // start y
-        length,
         &l_data_pf,
+        p_renderer);
+    Lsystem* lsystem_qs = new Lsystem(
+        SCREEN_WIDTH / 2, // start x
+        SCREEN_HEIGHT / 2,    // start y
+        &l_data_qs,
+        p_renderer);
+    Lsystem* lsystem_kce = new Lsystem(
+        SCREEN_WIDTH / 2, // start x
+        SCREEN_HEIGHT / 2,    // start y
+        &l_data_kce,
         p_renderer);
 
     for (int i = 0; i <= iterations; ++i)
@@ -78,6 +83,8 @@ int main(int argc, char *args[])
         lsystem_pd->Iterate_Generation();
         lsystem_pe->Iterate_Generation();
         lsystem_pf->Iterate_Generation();
+        lsystem_qs->Iterate_Generation();
+        lsystem_kce->Iterate_Generation();
     }
 
     // when passed into the Handle_Event() function as a non-pointer, encountered the following issue:
@@ -92,6 +99,8 @@ int main(int argc, char *args[])
     lsystems.push_back(lsystem_pd);
     lsystems.push_back(lsystem_pe);
     lsystems.push_back(lsystem_pf);
+    lsystems.push_back(lsystem_qs);
+    lsystems.push_back(lsystem_kce);
 
     // Prepare event handling and enter main program loop
     SDL_Event event;
@@ -124,6 +133,11 @@ int main(int argc, char *args[])
     delete(lsystem_pa);
     delete(lsystem_pb);
     delete(lsystem_pc);
+    delete(lsystem_pd);
+    delete(lsystem_pe);
+    delete(lsystem_pf);
+    delete(lsystem_qs);
+    delete(lsystem_kce);
 
     return 0;
 }

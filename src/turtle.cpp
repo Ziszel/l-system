@@ -54,6 +54,11 @@ void Turtle::Step()
     this->x = end_x;
     this->y = end_y;
 
+    this->Draw(start_x, start_y, end_x, end_y);
+}
+
+void Turtle::Draw(float start_x, float start_y, float end_x, float end_y)
+{
     if (this->is_pen_down)
     {
         SDL_SetRenderDrawColor(this->p_renderer, this->r, this->g, this->b, this->a);
@@ -69,3 +74,6 @@ float Turtle::Get_X() { return this->x; }
 float Turtle::Get_Y() { return this->y; }
 float Turtle::Get_Angle() { return this->angle; }
 float Turtle::Get_Length() { return this->length; }
+int Turtle::Get_R() { return this->r; }
+int Turtle::Get_G() { return this->g; }
+int Turtle::Get_B() { return this->b; }

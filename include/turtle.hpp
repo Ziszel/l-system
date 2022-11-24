@@ -1,7 +1,6 @@
 #pragma once
 #include <math.h>
 #include "SDL2/SDL.h"
-#include "iostream"
 
 class Turtle {
 private:
@@ -27,8 +26,8 @@ public:
     void Set_Length(float length); // how far forward the turtle will move
     void Rotate_Left(float angle);
     void Rotate_Right(float angle);
-    void Look_At(float x, float y);
     void Step(); // Advance the turtle forward, taking into account angle, and pen
+    void Draw(float start_x, float start_y, float end_x, float end_y);
 
     // Utility functions
     float Deg_To_Rad(float degrees);
@@ -37,4 +36,7 @@ public:
     float Get_Y();
     float Get_Angle();
     float Get_Length();
+    int Get_R();
+    int Get_G();
+    int Get_B();
 };

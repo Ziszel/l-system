@@ -17,7 +17,7 @@ int sdl_helper::Init_SDL()
     }
 
     // Set window context so that it can be displayed
-    p_window = SDL_CreateWindow("Fractals", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
+    p_window = SDL_CreateWindow("L-System-Viewer", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
     if (p_window == NULL)
     {
         std::cout << "Window could not be created! SDL_Error: \n"
@@ -60,7 +60,18 @@ void sdl_helper::Handle_Event(SDL_Event *event, std::vector<Lsystem*> lsystems)
 
             SDL_RenderPresent(p_renderer); // present the render to the screen
             break;
+        case 'c':
+            if(active_lsystem != -1)
+            {
+                // change the colour of the currently selected l-system and redraw it
+                lsystems.at(active_lsystem)->Change_Turtle_Colour();
+                SDL_SetRenderDrawColor(p_renderer, 0, 0, 0, 255); // make the bg black
+                SDL_RenderClear(p_renderer); // clear the renderer ready for fresh drawing
+                lsystems.at(active_lsystem)->Draw_Generation(); // draw the active l-system
 
+                SDL_RenderPresent(p_renderer); // present the render to the screen
+                break;
+            }
         default:
             break;
         }

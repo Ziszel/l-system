@@ -1,7 +1,7 @@
 axiom:F
-red:50
+red:255
 green:255
-blue:0
+blue:255
 alpha:255
 theta:20.0
 line_length:10.0
