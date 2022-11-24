@@ -11,7 +11,7 @@ using namespace sdl_helper;
 // This works as expected, but other examples do not
 // I believe my implementation does not handle edge re-writing nor nodes
 
-int main(int argc, char *args[])
+int main()
 {
     if (Init_SDL() < 0)
     {
@@ -19,8 +19,7 @@ int main(int argc, char *args[])
         return -1;
     }
 
-    int iterations = 5;
-
+    // Create a new Data Manager object and load in ALL the configuration files
     Data_Manager dm;
     Lsystem_Data l_data_pa = dm.Load("rulesets/plant_a");
     Lsystem_Data l_data_pb = dm.Load("rulesets/plant_b");
@@ -75,18 +74,6 @@ int main(int argc, char *args[])
         &l_data_kce,
         p_renderer);
 
-    for (int i = 0; i <= iterations; ++i)
-    {
-        lsystem_pa->Iterate_Generation();
-        lsystem_pb->Iterate_Generation();
-        lsystem_pc->Iterate_Generation();
-        lsystem_pd->Iterate_Generation();
-        lsystem_pe->Iterate_Generation();
-        lsystem_pf->Iterate_Generation();
-        lsystem_qs->Iterate_Generation();
-        lsystem_kce->Iterate_Generation();
-    }
-
     // when passed into the Handle_Event() function as a non-pointer, encountered the following issue:
     // error: use of deleted function ‘Lsystem::Lsystem(const Lsystem&)’
     // Lsystem::Lsystem(const Lsystem&)’ is implicitly deleted because the default definition would be ill-formed:
@@ -101,6 +88,16 @@ int main(int argc, char *args[])
     lsystems.push_back(lsystem_pf);
     lsystems.push_back(lsystem_qs);
     lsystems.push_back(lsystem_kce);
+
+    // this ensures that something is viewable on the screen when the application first loads.
+    // & passes by reference so that the values inside of lsystems are effected and not copies
+    for(auto &ls : lsystems)
+    {
+        for (int i = 0; i < iterations; ++i)
+        {
+            ls->Iterate_Generation();
+        }
+    }
 
     // Prepare event handling and enter main program loop
     SDL_Event event;
@@ -130,14 +127,10 @@ int main(int argc, char *args[])
     SDL_Quit();
 
     // ensure data assigned to the heap is cleaned before exiting the program
-    delete(lsystem_pa);
-    delete(lsystem_pb);
-    delete(lsystem_pc);
-    delete(lsystem_pd);
-    delete(lsystem_pe);
-    delete(lsystem_pf);
-    delete(lsystem_qs);
-    delete(lsystem_kce);
+    for (auto ls: lsystems)
+    {
+        delete(ls);
+    }
 
     return 0;
 }

@@ -6,6 +6,7 @@
 #include <vector>
 #include "../include/rule.hpp"
 
+// This struct contains a 1:1 map of values held across the two configuration files held in rulesets
 typedef struct Lsystem_Data
 {
     std::string axiom;

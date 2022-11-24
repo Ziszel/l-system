@@ -7,8 +7,8 @@ Lsystem::Lsystem(int start_x, int start_y, Lsystem_Data *ls_data,
                  SDL_Renderer *p_renderer) : turtle()
 {
     this->ls_data = ls_data;
-    this->current = this->ls_data->axiom;
-    this->iteration = 0;
+    this->axiom = this->ls_data->axiom;
+    this->current = axiom;
     this->Populate_Turtle_Colours();
 
     // Initial turtle setup
@@ -27,7 +27,8 @@ void Lsystem::Iterate_Generation()
     // completely erase stringstream
     this->next.clear(); 
     this->next.str(std::string());
-    // Iterate generation
+    // Iterate generation, for each character in the l-system string, either switch it out for a character set provided
+    // by a rule, or store it as is (it is a constant)
     for (auto i : this->current)
     {
         int wasRule = 0;
@@ -39,14 +40,29 @@ void Lsystem::Iterate_Generation()
                 wasRule++;
             }
         }
+        // this ensures constants are added after a rule check
         if (wasRule == 0)
         {
             this->next << i;
         }
     }
+    // iterate current to equal the next generation
     this->current = this->next.str();
-    this->iteration++;
 }
+
+void Lsystem::Process_Lsystem(int iterations)
+{
+    for (int i = 0; i <= iterations; ++i)
+    {
+        this->Iterate_Generation();
+    }
+}
+
+void Lsystem::Clear_Lsystem()
+{
+    this->current = axiom;
+}
+
 
 void Lsystem::Draw_Generation()
 {
@@ -138,6 +154,7 @@ void Lsystem::Populate_Turtle_Colours()
 
 void Lsystem::Change_Turtle_Colour()
 {
+    // check if we are at the end of the list, and if so go to the first colour
     if (this->current_colour == this->turtle_colours.size())
     {
         this->current_colour = 0;
@@ -150,9 +167,4 @@ void Lsystem::Change_Turtle_Colour()
     this->turtle.Set_Pen_Colour(r, g, b, 255);
 
     this->current_colour++;
-}
-
-int Lsystem::Get_Iteration()
-{
-    return iteration;
 }

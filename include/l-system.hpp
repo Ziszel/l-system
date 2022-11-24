@@ -20,13 +20,13 @@ private:
     std::stringstream next; // used to build the next l-system generation
 
     Turtle turtle;
-    std::vector<Vector3> turtle_branch_data;
-    Lsystem_Data* ls_data;
-    int iteration;
+    std::vector<Vector3> turtle_branch_data; // stores the turtle pos and angle when branching
+    Lsystem_Data* ls_data; // the data loaded from configuration files
     int turtle_start_x;
     int turtle_start_y;
     std::vector<Vector3> turtle_colours;
-    int current_colour = 0;
+    uint current_colour = 0; // used for looping through the colours available
+    std::string axiom; // store the axiom for resetting the 'current' variable on 'Clear_Lsystem()'
 
     // SDL specific
     SDL_Renderer* p_renderer;
@@ -37,9 +37,10 @@ public:
             Lsystem_Data* ls_data,
             SDL_Renderer* p_renderer);
 
-    void Iterate_Generation();
+    void Iterate_Generation(); // iterates one generation
+    void Process_Lsystem(int iterations); // will call Iterate_Generation() by the number of iterations passed in
+    void Clear_Lsystem();
     void Draw_Generation();
-    int Get_Iteration();
     void Change_Turtle_Colour();
-    void Populate_Turtle_Colours();
+    void Populate_Turtle_Colours(); // Called at the beginning to ensure turtle_colours has lots of colours to draw!
 };

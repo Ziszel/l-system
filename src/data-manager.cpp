@@ -2,7 +2,6 @@
 
 Data_Manager::Data_Manager()
 {
-    // constructor
 }
 
 Lsystem_Data Data_Manager::Load(std::string file_path)
@@ -92,11 +91,13 @@ int Data_Manager::Assign_Data(Lsystem_Data *ls_data, std::string prop, std::stri
     }
     else if (prop == "alpha")
     {
+        // convert string to integer
         ls_data->alpha = stoi(value);
         return 0;
     }
     else if (prop == "theta")
     {
+        // convert string to floating point value
         ls_data->theta = stof(value);
         return 0;
     }

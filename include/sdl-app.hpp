@@ -3,6 +3,7 @@
 #include <iostream>
 #include <vector>
 #include "../include/l-system.hpp"
+#include "../include/data-manager.hpp"
 
 namespace sdl_helper {
 
@@ -16,9 +17,11 @@ namespace sdl_helper {
     // Always favour renderer over surface in modern SDL2
     extern SDL_Renderer* p_renderer;
     extern float program_running;
-    extern int active_lsystem;
+    extern size_t active_lsystem; // to avoid different signedness comparisons, use size_of (comparing against unsigned long)
+    extern int iterations;
 
     int Init_SDL();
+    void Create_Lsystems();
     void Handle_Event(SDL_Event* event, std::vector<Lsystem*> lsystems);
 
 }
