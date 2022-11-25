@@ -93,7 +93,7 @@ int main()
     // & passes by reference so that the values inside of lsystems are effected and not copies
     for(auto &ls : lsystems)
     {
-        for (int i = 0; i < iterations; ++i)
+        for (int i = 0; i <= iterations; ++i)
         {
             ls->Iterate_Generation();
         }
