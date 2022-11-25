@@ -31,6 +31,9 @@ Pressing the 'A' key will begin the programming at which point the following con
 
 NOTE: Each L-System is completely independent of the others. Changing the colours of one, will not change the colours of the rest, etc...
 
+You can edit any of the configuration files to see new changes inside of the application. You can not however rename these files, nor can
+you add additional files due to the way the application loads in data.
+
 ## Example Screenshots
 
 ![Plant A](screenshots/plant_a.png)
